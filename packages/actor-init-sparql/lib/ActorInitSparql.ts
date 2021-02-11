@@ -8,7 +8,7 @@ import { KEY_CONTEXT_AUTH } from '@comunica/bus-http';
 import type { IActionInit, IActorOutputInit } from '@comunica/bus-init';
 import type { IActorQueryOperationOutput } from '@comunica/bus-query-operation';
 import { KEY_CONTEXT_BASEIRI } from '@comunica/bus-query-operation';
-
+import { KEY_CONTEXT_DESTINATION } from '@comunica/bus-rdf-update-quads';
 import { ActionContext } from '@comunica/core';
 import { LoggerPretty } from '@comunica/logger-pretty';
 import minimist = require('minimist');
@@ -41,6 +41,7 @@ export class ActorInitSparql extends ActorInitSparqlBrowser {
   Options:
     -q            evaluate the given SPARQL query string
     -f            evaluate the SPARQL query in the given file
+    -d            the destination for update queries
     -c            use the given JSON configuration file (e.g., config.json)
     -t            the MIME type of the output (e.g., application/json)
     -i            the query input format (e.g., graphql, defaults to sparql)
@@ -153,6 +154,11 @@ export class ActorInitSparql extends ActorInitSparqlBrowser {
         const source = this.getSourceObjectFromString(sourceValue);
         context.sources.push(source);
       });
+    }
+
+    // Add destination to context
+    if (args.d) {
+      context[KEY_CONTEXT_DESTINATION] = args.d;
     }
 
     // Set the logger
