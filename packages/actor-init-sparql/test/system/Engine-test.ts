@@ -153,13 +153,7 @@ describe('System test: ActorInitSparql', () => {
           sources: [],
           destination: store,
         });
-
-        // Check results
         await result.updateResult;
-        expect((await arrayifyStream(result.quadStreamInserted))).toEqualRdfQuadArray([
-          DF.quad(DF.namedNode('ex:s'), DF.namedNode('ex:p'), DF.namedNode('ex:o')),
-        ]);
-        expect(result.quadStreamDeleted).toBeUndefined();
 
         // Check store contents
         expect(store.size).toEqual(1);
@@ -182,15 +176,7 @@ describe('System test: ActorInitSparql', () => {
           sources: [],
           destination: store,
         });
-
-        // Check results
         await result.updateResult;
-        expect((await arrayifyStream(result.quadStreamInserted))).toEqualRdfQuadArray([
-          DF.quad(DF.namedNode('ex:s'), DF.namedNode('ex:p'), DF.namedNode('ex:o')),
-        ]);
-        expect((await arrayifyStream(result.quadStreamDeleted))).toEqualRdfQuadArray([
-          DF.quad(DF.namedNode('ex:s-pre'), DF.namedNode('ex:p-pre'), DF.namedNode('ex:o-pre')),
-        ]);
 
         // Check store contents
         expect(store.size).toEqual(1);
@@ -219,15 +205,7 @@ describe('System test: ActorInitSparql', () => {
           sources: [ store ],
           destination: store,
         });
-
-        // Check results
         await result.updateResult;
-        expect(result.quadStreamInserted).toBeUndefined();
-        expect((await arrayifyStream(result.quadStreamDeleted))).toEqualRdfQuadArray([
-          DF.quad(DF.namedNode('ex:s'), DF.namedNode('ex:p1'), DF.namedNode('ex:o1')),
-          DF.quad(DF.namedNode('ex:s'), DF.namedNode('ex:p2'), DF.namedNode('ex:o2')),
-          DF.quad(DF.namedNode('ex:s'), DF.namedNode('ex:p3'), DF.namedNode('ex:o3')),
-        ]);
 
         // Check store contents
         expect(store.size).toEqual(1);
@@ -247,11 +225,7 @@ describe('System test: ActorInitSparql', () => {
             destination: store,
           },
         );
-
-        // Check results
         await result.updateResult;
-        expect((await arrayifyStream(result.quadStreamInserted)).length > 0).toBeTruthy();
-        expect(result.quadStreamDeleted).toBeUndefined();
 
         // Check store contents
         expect(store.size > 0).toBeTruthy();
