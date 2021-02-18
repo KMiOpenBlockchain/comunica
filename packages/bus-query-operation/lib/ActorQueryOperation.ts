@@ -45,6 +45,11 @@ export const KEY_CONTEXT_BASEIRI = '@comunica/actor-init-sparql:baseIRI';
  * @value {any} a date.
  */
 export const KEY_CONTEXT_QUERY_TIMESTAMP = '@comunica/actor-init-sparql:queryTimestamp';
+/**
+ * @type {string} Context entry for indicating that only read operations are allowed, defaults to false.
+ * @value {any} A boolean.
+ */
+export const KEY_CONTEXT_READONLY = '@comunica/bus-query-operation:readOnly';
 
 /**
  * A comunica actor for query-operation events.
@@ -185,6 +190,16 @@ export abstract class ActorQueryOperation extends Actor<IActionQueryOperation, I
       )
         .then((exists: boolean) => expr.not ? !exists : exists);
     };
+  }
+
+  /**
+   * Throw an error if the context contains the readOnly flag.
+   * @param context An action context.
+   */
+  public static throwOnReadOnly(context?: ActionContext): void {
+    if (context && context.get(KEY_CONTEXT_READONLY)) {
+      throw new Error(`Attempted a write operation in read-only mode`);
+    }
   }
 }
 
