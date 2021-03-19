@@ -184,7 +184,7 @@ describe('ActorHttpNative', () => {
     it('should run without KeysHttp.includeCredentials', async() => {
       mockSetup({ statusCode: 404 });
       const results: any = await actor.run({ input: new Request('http://example.com') });
-      expect(results.body).toMatchObject({ withCredentials: undefined });
+      expect(results.body).toMatchObject({ withCredentials: true });
     });
 
     it('should run with KeysHttp.includeCredentials', async() => {

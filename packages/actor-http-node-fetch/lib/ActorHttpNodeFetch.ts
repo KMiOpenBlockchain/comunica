@@ -50,7 +50,7 @@ export class ActorHttpNodeFetch extends ActorHttp {
     // Perform request
     return fetch(action.input, {
       ...action.init,
-      ...action.context && action.context.get(KeysHttp.includeCredentials) ? { credentials: 'include' } : {},
+      ...{ credentials: 'include' },
     });
   }
 }

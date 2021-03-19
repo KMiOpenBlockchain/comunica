@@ -87,7 +87,8 @@ describe('ActorHttpNodeFetch', () => {
         context: ActionContext({}),
       });
       expect(spy).toHaveBeenCalledWith({ url: 'https://www.google.com/' },
-        { headers: new Headers({ 'user-agent': (<any> actor).userAgent }) });
+        { credentials: 'include',
+          headers: new Headers({ 'user-agent': (<any> actor).userAgent }) });
     });
 
     it('should run with KeysHttp.includeCredentials', async() => {
@@ -98,10 +99,9 @@ describe('ActorHttpNodeFetch', () => {
           [KeysHttp.includeCredentials]: true,
         }),
       });
-      expect(spy).toHaveBeenCalledWith({ url: 'https://www.google.com/' }, {
-        credentials: 'include',
-        headers: new Headers({ 'user-agent': (<any> actor).userAgent }),
-      });
+      expect(spy).toHaveBeenCalledWith({ url: 'https://www.google.com/' },
+        { credentials: 'include',
+          headers: new Headers({ 'user-agent': (<any> actor).userAgent }) });
     });
 
     it('should run with authorization', async() => {
@@ -114,10 +114,11 @@ describe('ActorHttpNodeFetch', () => {
       });
       expect(spy).toHaveBeenCalledWith(
         { url: 'https://www.google.com/' },
-        { headers: new Headers({
-          Authorization: `Basic ${Buffer.from('user:password').toString('base64')}`,
-          'user-agent': (<any> actor).userAgent,
-        }) },
+        { credentials: 'include',
+          headers: new Headers({
+            Authorization: `Basic ${Buffer.from('user:password').toString('base64')}`,
+            'user-agent': (<any> actor).userAgent,
+          }) },
       );
     });
 
@@ -132,10 +133,11 @@ describe('ActorHttpNodeFetch', () => {
       });
       expect(spy).toHaveBeenCalledWith(
         { url: 'https://www.google.com/' },
-        { headers: new Headers({
-          Authorization: `Basic ${Buffer.from('user:password').toString('base64')}`,
-          'user-agent': (<any> actor).userAgent,
-        }) },
+        { credentials: 'include',
+          headers: new Headers({
+            Authorization: `Basic ${Buffer.from('user:password').toString('base64')}`,
+            'user-agent': (<any> actor).userAgent,
+          }) },
       );
     });
 
@@ -151,11 +153,12 @@ describe('ActorHttpNodeFetch', () => {
       });
       expect(spy).toHaveBeenCalledWith(
         { url: 'https://www.google.com/' },
-        { headers: new Headers({
-          Authorization: `Basic ${Buffer.from('user:password').toString('base64')}`,
-          'Content-Type': 'image/jpeg',
-          'user-agent': (<any> actor).userAgent,
-        }) },
+        { credentials: 'include',
+          headers: new Headers({
+            Authorization: `Basic ${Buffer.from('user:password').toString('base64')}`,
+            'Content-Type': 'image/jpeg',
+            'user-agent': (<any> actor).userAgent,
+          }) },
       );
     });
 
@@ -193,7 +196,8 @@ describe('ActorHttpNodeFetch', () => {
         init: { headers: new Headers({ 'user-agent': 'b' }) },
       });
       expect(spy).toHaveBeenCalledWith({ url: 'https://www.google.com/' },
-        { headers: new Headers({ 'user-agent': 'b' }) });
+        { credentials: 'include',
+          headers: new Headers({ 'user-agent': 'b' }) });
     });
 
     it('should set a user agent if none has been set', async() => {
@@ -203,7 +207,8 @@ describe('ActorHttpNodeFetch', () => {
         init: { headers: new Headers({}) },
       });
       expect(spy).toHaveBeenCalledWith({ url: 'https://www.google.com/' },
-        { headers: new Headers({ 'user-agent': (<any> actor).userAgent }) });
+        { credentials: 'include',
+          headers: new Headers({ 'user-agent': (<any> actor).userAgent }) });
     });
   });
 });
